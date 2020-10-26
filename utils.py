@@ -14,23 +14,29 @@ class Queue():
         self.queue.append(value)
 
     def dequeue(self):
-        if len(self.queue) > 0:
+        if self.size() > 0:
             return self.queue.pop(0)
         else:
             return None
+    
+    def size(self):
+        return len(self.queue)
 
 class Stack():
     def __init__(self):
-        self.stack = []
+        self.s = []
 
     def push(self, value):
-        self.stack.append(value)
+        self.s.append(value)
 
     def pop(self):
-        if len(self.stack) > 0:
-            return self.stack.pop()
+        if self.size() > 0:
+            return self.s.pop()
         else:
             return None
+
+    def size(self):
+        return len(self.s)
 
 class Graph:
     def __init__(self):
@@ -41,7 +47,7 @@ class Graph:
         stack = Stack()
         stack.push([starting_vertex])
 
-        while len(stack) > 0:
+        while stack.size() > 0:
             current_room = stack.pop()
             room = current_room[-1]
             if room not in visited:
@@ -65,7 +71,7 @@ class Graph:
         queue.enqueue([starting_vertex])
         visited = set()
 
-        while len(queue) > 0:
+        while queue.size() > 0:
             path = queue.dequeue()
             room = path[-1]
             if room == destination_vertex:
@@ -91,7 +97,7 @@ class Graph:
         queue.enqueue([starting_vertex])
         visited = set()
 
-        while len(queue) > 0:
+        while queue.size() > 0:
             path = queue.dequeue()
             room = path[-1]
             if room == destination_vertex:

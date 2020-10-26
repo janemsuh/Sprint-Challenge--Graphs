@@ -1,8 +1,9 @@
 from room import Room
 from player import Player
 from world import World
+from utils import Queue, Stack, Graph
 
-import random
+# import random
 from ast import literal_eval
 
 # Load world
@@ -24,12 +25,31 @@ world.load_graph(room_graph)
 world.print_rooms()
 
 player = Player(world.starting_room)
+graph = Graph()
+graph2 = Graph()
+
+dfs_rooms = graph.dfs(player.current_room)
+bfs_rooms = graph2.bfs_rooms(player.current_room, None)
+
+rooms = [room for room in dfs_rooms]
 
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
+visited = set()
 
-
+while(len(visited) < len(room_graph) -1):
+    current_room = rooms[0]
+    next_room = rooms[1]
+    shortest_path = graph.bfs(current_room, next_room)
+    while len(shortest_path) > 1:
+        current_room_neighbors = dfs_rooms[shortest_path[0]]
+        next_room = shortest_path[1]
+        if next_room in current_room_neighbors:
+            traversal_path.append(current_room_neighbors[next_room])
+        shortest_path.remove(shortest_path[0])
+    rooms.remove(current_room)
+    visited.add(current_room)
 
 # TRAVERSAL TEST - DO NOT MODIFY
 visited_rooms = set()
